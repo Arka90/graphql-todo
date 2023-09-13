@@ -1,0 +1,9 @@
+type Todo implements Timestamps {
+  id: ID!
+  title: String!
+  description: String
+  isDone: Boolean
+  createdAt: Date!
+  updatedAt: Date!
+  user: User!
+}

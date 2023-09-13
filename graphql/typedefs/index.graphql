@@ -1,3 +1,20 @@
+scalar Date
+
 type Query {
   test: String!
+  users: [User]!
+  user: User!
+  todos: [Todo]!
+  todo: Todo!
+}
+
+type Mutation {
+  testMutation(message: String!): String
+  registerUser(
+    name: String!
+    email: String!
+    dob: Date!
+    gender: String!
+  ): Auth!
+  loginUser(email: String!, password: String): Auth!
 }
