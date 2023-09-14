@@ -1,5 +1,5 @@
 import { Schema, model } from "mongoose";
-
+import bcrypt from "bcrypt";
 const UserSchema = new Schema({
   name: {
     type: String,
@@ -41,12 +41,44 @@ const UserSchema = new Schema({
   },
 });
 
-tourSchema.pre("save", function (next) {
-  var diff_ms = Date.now() - this.dob.getTime();
-  var age_dt = new Date(diff_ms);
-  this.age = Math.abs(age_dt.getUTCFullYear() - 1970);
+UserSchema.pre("save", function (next) {
+  const dob = new Date(this.dob);
+  //calculate month difference from current date in time
+  const month_diff = Date.now() - dob.getTime();
+  //convert the calculated difference in date format
+  const age_dt = new Date(month_diff);
+  //extract year from date
+  const year = age_dt.getUTCFullYear();
+  //now calculate the age of the user
+  this.age = Math.abs(year - 1970);
   next();
 });
+
+UserSchema.pre(/^find/, function (next) {
+  const dob = new Date(this.dob);
+  //calculate month difference from current date in time
+  const month_diff = Date.now() - dob.getTime();
+  //convert the calculated difference in date format
+  const age_dt = new Date(month_diff);
+  //extract year from date
+  const year = age_dt.getUTCFullYear();
+  //now calculate the age of the user
+  this.age = Math.abs(year - 1970);
+  next();
+});
+
+UserSchema.pre("save", async function (next) {
+  //Hash the password with cost of 12
+  this.password = await bcrypt.hash(this.password, 12);
+  next();
+});
+
+UserSchema.methods.correctPassword = async function (
+  candidatePassword,
+  userPassword
+) {
+  return await bcrypt.compare(candidatePassword, userPassword);
+};
 
 const User = model("User", UserSchema);
 

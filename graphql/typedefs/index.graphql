@@ -2,8 +2,8 @@ scalar Date
 
 type Query {
   test: String!
-  users: [User]!
-  user: User!
+  getUsers: [User]!
+  getUser(id: ID!): User!
   todos: [Todo]!
   todo: Todo!
 }
@@ -15,6 +15,7 @@ type Mutation {
     email: String!
     dob: Date!
     gender: String!
+    password: String!
   ): Auth!
   loginUser(email: String!, password: String): Auth!
 }

@@ -1,4 +1,4 @@
 type Auth {
   token: String!
-  user: User!
+  user: User
 }
