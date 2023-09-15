@@ -4,7 +4,8 @@ type Query {
   test: String!
   getUsers: [User]!
   getUser(id: ID!): User!
-  todos: [Todo]!
+  getTodos: [Todo]!
+  getTodosById(id: ID!): [Todo]!
   todo: Todo!
 }
 
@@ -18,4 +19,5 @@ type Mutation {
     password: String!
   ): Auth!
   loginUser(email: String!, password: String!): Auth!
+  createTodo(title: String!, description: String!): Todo!
 }

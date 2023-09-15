@@ -1,5 +1,6 @@
 import { Schema, model } from "mongoose";
 import bcrypt from "bcrypt";
+
 const UserSchema = new Schema({
   name: {
     type: String,
@@ -14,7 +15,12 @@ const UserSchema = new Schema({
     default: "https://cdn-icons-png.flaticon.com/512/6596/6596121.png",
   },
   todos: {
-    type: [String],
+    type: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Todo",
+      },
+    ],
   },
   dob: {
     type: Date,

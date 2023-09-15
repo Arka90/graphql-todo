@@ -5,7 +5,12 @@ import { expressMiddleware as apolloMiddleware } from "@apollo/server/express4";
 import connectDB from "./db";
 
 async function getContext({ req }) {
-  return { name: "Arka" };
+  if (req.auth) {
+    const { id, name, email } = req.auth;
+    return { id, name, email };
+  } else {
+    return {};
+  }
 }
 
 const start = async () => {
