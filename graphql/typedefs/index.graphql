@@ -17,5 +17,5 @@ type Mutation {
     gender: String!
     password: String!
   ): Auth!
-  loginUser(email: String!, password: String): Auth!
+  loginUser(email: String!, password: String!): Auth!
 }

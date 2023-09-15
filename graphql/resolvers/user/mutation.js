@@ -24,6 +24,21 @@ const userMutation = {
       throw new GraphQLError("Internal server error");
     }
   },
+
+  loginUser: async (_root, { email, password }) => {
+    try {
+      const user = await User.findOne({ email });
+
+      if (!user || !(await user.correctPassword(password, user.password)))
+        throw new GraphQLError("No user found");
+
+      const data = { id: user._id, name: user.name, email: user.email };
+      const token = Jwt.sign(data, process.env.JWT_SECRET);
+      return { token, user };
+    } catch (error) {
+      throw new GraphQLError("Internal server error");
+    }
+  },
 };
 
 export default userMutation;
