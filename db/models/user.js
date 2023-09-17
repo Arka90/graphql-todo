@@ -47,6 +47,11 @@ const UserSchema = new Schema({
   },
 });
 
+UserSchema.pre(/^find/, function (next) {
+  this.populate("todos");
+  next();
+});
+
 UserSchema.pre("save", function (next) {
   const dob = new Date(this.dob);
   //calculate month difference from current date in time

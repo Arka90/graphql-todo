@@ -7,7 +7,7 @@ const userMutation = {
     try {
       const existUser = await User.findOne({ email });
 
-      if (existUser) throw new Error();
+      if (existUser) throw new Error("User already exisits");
 
       const user = await User.create({
         name,
@@ -21,7 +21,7 @@ const userMutation = {
       const token = Jwt.sign(data, process.env.JWT_SECRET);
       return { token, user };
     } catch (error) {
-      throw new GraphQLError("Internal server error");
+      throw new GraphQLError(error.message);
     }
   },
 
@@ -30,13 +30,13 @@ const userMutation = {
       const user = await User.findOne({ email });
 
       if (!user || !(await user.correctPassword(password, user.password)))
-        throw new GraphQLError("No user found");
+        throw new Error("Incorrect Email or Password");
 
       const data = { id: user._id, name: user.name, email: user.email };
       const token = Jwt.sign(data, process.env.JWT_SECRET);
       return { token, user };
     } catch (error) {
-      throw new GraphQLError("Internal server error");
+      throw new GraphQLError(error.message);
     }
   },
 };

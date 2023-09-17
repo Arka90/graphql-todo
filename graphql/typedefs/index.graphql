@@ -1,16 +1,14 @@
 scalar Date
 
 type Query {
-  test: String!
   getUsers: [User]!
   getUser(id: ID!): User!
-  getTodos: [Todo]!
+  getAllTodos: [Todo]!
   getTodosById(id: ID!): [Todo]!
   todo: Todo!
 }
 
 type Mutation {
-  testMutation(message: String!): String
   registerUser(
     name: String!
     email: String!
@@ -19,5 +17,8 @@ type Mutation {
     password: String!
   ): Auth!
   loginUser(email: String!, password: String!): Auth!
+
   createTodo(title: String!, description: String!): Todo!
+  editTodo(title: String, description: String, isDone: Boolean, _id: ID!): Todo
+  deleteTodo(todoId: ID!): String
 }

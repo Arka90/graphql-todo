@@ -1,14 +1,12 @@
-import { testQueries, testMutation } from "./Test";
 import { userMutation, userQueries } from "./user";
-import { todoMutation } from "./todo";
+import { todoMutation, todoQueries } from "./todo";
 const resolvers = {
   Query: {
-    ...testQueries,
     ...userQueries,
+    ...todoQueries,
   },
   //Your Mutations go here
   Mutation: {
-    ...testMutation,
     ...userMutation,
     ...todoMutation,
   },

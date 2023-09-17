@@ -5,5 +5,5 @@ type Todo implements Timestamps {
   isDone: Boolean
   createdAt: Date!
   updatedAt: Date!
-  user: User!
+  user: User
 }

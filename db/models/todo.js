@@ -12,7 +12,7 @@ const TodoSchema = new Schema({
     type: Boolean,
     default: false,
   },
-  userId: {
+  user: {
     type: Schema.Types.ObjectId,
     ref: "User",
   },
@@ -27,6 +27,11 @@ const TodoSchema = new Schema({
     default: new Date(),
   },
 });
+
+// TodoSchema.pre(/^find/, function (next) {
+//   this.populate("user");
+//   next();
+// });
 
 const Todo = model("Todo", TodoSchema);
 

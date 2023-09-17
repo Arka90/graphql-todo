@@ -6,16 +6,18 @@ const userQueries = {
     try {
       const users = await User.find({});
       return users;
-    } catch (error) {}
+    } catch (error) {
+      throw new GraphQLError(error.message);
+    }
   },
   getUser: async (_root, { id }) => {
     try {
       const user = await User.findOne({ _id: id });
-      if (!user) throw new Error("Error");
+      if (!user) throw new Error("Need to login");
 
       return user;
     } catch (error) {
-      throw new GraphQLError("No user found");
+      throw new GraphQLError(error.message);
     }
   },
 };
