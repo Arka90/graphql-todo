@@ -4,7 +4,7 @@ type Query {
   getUsers: [User]!
   getUser(id: ID!): User!
   getAllTodos: [Todo]!
-  getTodosById(id: ID!): [Todo]!
+  getTodosByUser: [Todo]!
   todo: Todo!
 }
 
