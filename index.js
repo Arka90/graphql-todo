@@ -3,6 +3,9 @@ import app from "./app";
 import apolloServer from "./graphql";
 import { expressMiddleware as apolloMiddleware } from "@apollo/server/express4";
 import connectDB from "./db";
+import cors from "cors";
+
+app.use(cors());
 
 async function getContext({ req }) {
   if (req.auth) {
