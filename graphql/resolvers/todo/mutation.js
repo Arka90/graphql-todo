@@ -14,6 +14,7 @@ const todoMutation = {
         user: user._id,
       });
       user.todos.push(todo._id);
+      user.updatedAt = new Date();
       user.save();
       return todo;
     } catch (error) {
@@ -43,6 +44,7 @@ const todoMutation = {
       if (!user) throw new Error("No user found");
       const todo = await Todo.findOneAndDelete({ _id: todoId });
       user.todos = user.todos.filter((todo) => todo._id != todoId);
+      user.updatedAt = new Date();
       user.save();
 
       return "data deleted";

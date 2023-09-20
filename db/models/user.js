@@ -80,7 +80,10 @@ UserSchema.pre(/^find/, function (next) {
 
 UserSchema.pre("save", async function (next) {
   //Hash the password with cost of 12
-  this.password = await bcrypt.hash(this.password, 12);
+
+  if (this.createdAt - this.updatedAt == 0) {
+    this.password = await bcrypt.hash(this.password, 12);
+  }
   next();
 });
 
