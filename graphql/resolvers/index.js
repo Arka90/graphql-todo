@@ -5,7 +5,7 @@ const resolvers = {
     ...userQueries,
     ...todoQueries,
   },
-  //Your Mutations go here
+
   Mutation: {
     ...userMutation,
     ...todoMutation,

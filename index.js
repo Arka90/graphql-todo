@@ -7,6 +7,7 @@ import cors from "cors";
 
 app.use(cors());
 
+// setting the user in context
 async function getContext({ req }) {
   if (req.auth) {
     const { id, name, email } = req.auth;

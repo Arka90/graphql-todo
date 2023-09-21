@@ -1,5 +1,6 @@
 import { Schema, model } from "mongoose";
 import bcrypt from "bcrypt";
+import { calculateDOB } from "../../utils/helper";
 
 const UserSchema = new Schema({
   name: {
@@ -52,41 +53,28 @@ UserSchema.pre(/^find/, function (next) {
   next();
 });
 
+// Calculating the age before saving to DB
 UserSchema.pre("save", function (next) {
-  const dob = new Date(this.dob);
-  //calculate month difference from current date in time
-  const month_diff = Date.now() - dob.getTime();
-  //convert the calculated difference in date format
-  const age_dt = new Date(month_diff);
-  //extract year from date
-  const year = age_dt.getUTCFullYear();
-  //now calculate the age of the user
-  this.age = Math.abs(year - 1970);
+  this.age = calculateDOB(this.dob);
   next();
 });
 
+// Calculating and saving the age before any find quries so that user can read updated age every time
 UserSchema.pre(/^find/, function (next) {
-  const dob = new Date(this.dob);
-  //calculate month difference from current date in time
-  const month_diff = Date.now() - dob.getTime();
-  //convert the calculated difference in date format
-  const age_dt = new Date(month_diff);
-  //extract year from date
-  const year = age_dt.getUTCFullYear();
-  //now calculate the age of the user
-  this.age = Math.abs(year - 1970);
+  this.age = calculateDOB(this.dob);
   next();
 });
 
+// This hashed the password before saving to the DB
 UserSchema.pre("save", async function (next) {
   //Hash the password with cost of 12
-
   if (this.createdAt - this.updatedAt == 0) {
     this.password = await bcrypt.hash(this.password, 12);
   }
   next();
 });
 
+// Method to compare the hashed password and the password pass by the user
 UserSchema.methods.correctPassword = async function (
   candidatePassword,
   userPassword

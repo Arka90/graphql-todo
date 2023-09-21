@@ -1,3 +1,4 @@
+// This file is parsing the JWT token into user data
 import { expressjwt } from "express-jwt";
 
 const secret = process.env.JWT_SECRET;

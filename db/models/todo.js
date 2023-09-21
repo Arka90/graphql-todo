@@ -28,6 +28,7 @@ const TodoSchema = new Schema({
   },
 });
 
+// This is causing infinite call problem
 // TodoSchema.pre(/^find/, function (next) {
 //   this.populate("user");
 //   next();

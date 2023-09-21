@@ -43,6 +43,8 @@ const todoMutation = {
       const user = await User.findOne({ _id: id });
       if (!user) throw new Error("No user found");
       const todo = await Todo.findOneAndDelete({ _id: todoId });
+      if (!todo) throw new Error("No todo found");
+
       user.todos = user.todos.filter((todo) => todo._id != todoId);
       user.updatedAt = new Date();
       user.save();
